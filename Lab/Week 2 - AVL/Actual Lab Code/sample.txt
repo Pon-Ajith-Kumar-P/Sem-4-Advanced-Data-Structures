@@ -1,0 +1,97 @@
+void familydetails(const T &x, AvlNode *t) const
+{
+    if (isEmpty(t))
+    {
+        cout << "No element in the tree" << endl;
+        return;
+    }
+
+    // Traverse the tree to find the node containing the element x
+    AvlNode *parent = nullptr;
+    AvlNode *grandparent = nullptr;
+    AvlNode *current = t;
+
+    while (current != nullptr)
+    {
+        if (x < current->element)
+        {
+            grandparent = parent;
+            parent = current;
+            current = current->left;
+        }
+        else if (x > current->element)
+        {
+            grandparent = parent;
+            parent = current;
+            current = current->right;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    // If element not found
+    if (current == nullptr)
+    {
+        cout << "Element " << x << " not found in the tree" << endl;
+        return;
+    }
+
+    // Now 'current' points to the node containing the element x
+    cout << "Element : " << current->element << endl;
+
+    // Parent
+    if (parent != nullptr)
+        cout << "Parent : " << parent->element << endl;
+    else
+        cout << "Parent : None" << endl;
+
+    // Grandparent
+    if (grandparent != nullptr)
+        cout << "Grandparent : " << grandparent->element << endl;
+    else
+        cout << "Grandparent : None" << endl;
+
+    // Sibling
+    if (parent != nullptr)
+    {
+        if (parent->left == current && parent->right != nullptr)
+            cout << "Sibling : " << parent->right->element << endl;
+        else if (parent->right == current && parent->left != nullptr)
+            cout << "Sibling : " << parent->left->element << endl;
+        else
+            cout << "Sibling : None" << endl;
+    }
+    else
+    {
+        cout << "Sibling : None" << endl;
+    }
+
+    // Children
+    if (current->left != nullptr && current->right != nullptr)
+        cout << "Children : " << current->left->element << " " << current->right->element << endl;
+    else if (current->left != nullptr)
+        cout << "Children : " << current->left->element << endl;
+    else if (current->right != nullptr)
+        cout << "Children : " << current->right->element << endl;
+    else
+        cout << "Children : None" << endl;
+
+    // Grandchildren
+    if (current->left != nullptr)
+    {
+        if (current->left->left != nullptr)
+            cout << "Grandchildren (Left): " << current->left->left->element << " ";
+        if (current->left->right != nullptr)
+            cout << current->left->right->element;
+    }
+    if (current->right != nullptr)
+    {
+        if (current->right->left != nullptr)
+            cout << "Grandchildren (Right): " << current->right->left->element << " ";
+        if (current->right->right != nullptr)
+            cout << current->right->right->element;
+    }
+    cout << endl;
+}
