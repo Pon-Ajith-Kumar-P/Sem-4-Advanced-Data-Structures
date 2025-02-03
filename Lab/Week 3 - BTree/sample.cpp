@@ -94,21 +94,6 @@ class BtreeNode
         return c[i]->search(k);
     }
 
-    void printTree(int level = 0) const 
-    {
-        if (this == nullptr)
-            return;
-        for (int i = n - 1; i >= 0; i--) 
-        {
-            if (!leaf)
-                c[i + 1]->printTree(level + 1);
-            for (int j = 0; j < level; j++)
-                cout << "      ";
-            cout << keys[i] << endl;
-        }
-        if (!leaf)
-            c[0]->printTree(level + 1);
-    }
 
     template <typename U>
     friend class Btree;

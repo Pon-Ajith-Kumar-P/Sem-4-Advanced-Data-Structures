@@ -93,22 +93,7 @@ public:
             return NULL; // If the key is not found and this is a leaf node, return NULL
         return c[i]->search(k); // Recur to search in the appropriate child
     }
-
-    // Function to print the B-tree structure
-    void printTree(int level = 0) const {
-        if (this == nullptr)
-            return;
-        for (int i = n - 1; i >= 0; i--) {
-            if (!leaf)
-                c[i + 1]->printTree(level + 1); // Print the subtree rooted with child c[i+1]
-            for (int j = 0; j < level; j++)
-                cout << "      "; // Indentation for levels
-            cout << keys[i] << endl; // Print the key
-        }
-        if (!leaf)
-            c[0]->printTree(level + 1); // Print the subtree rooted with child c[0]
-    }
-
+    
     // Friend class Btree to access private members
     template <typename U>
     friend class Btree;
@@ -160,11 +145,6 @@ public:
         }
     }
 
-    // Function to print the B-tree structure
-    void printTree() const {
-        if (root != NULL)
-            root->printTree();
-    }
 };
 
 int main() {
@@ -178,8 +158,7 @@ int main() {
         cout << "1. Insert\n";
         cout << "2. Traverse\n";
         cout << "3. Search\n";
-        cout << "4. Print Tree\n";
-        cout << "5. Exit\n";
+        cout << "4. Exit\n";
         cout << "Enter your choice: ";
         cin >> choice; // Input the user's choice
 
@@ -208,16 +187,12 @@ int main() {
             break;
         }
         case 4:
-            cout << "B-tree print:\n";
-            btree.printTree(); // Print the B-tree structure
-            break;
-        case 5:
             cout << "Exiting...\n";
             break;
         default:
             cout << "Invalid choice. Please try again.\n";
         }
-    } while (choice != 5); // Repeat until the user chooses to exit
+    } while (choice != 4); // Repeat until the user chooses to exit
 
     return 0;
 }

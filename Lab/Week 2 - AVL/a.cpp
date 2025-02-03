@@ -1,6 +1,7 @@
 #include<iostream>
 #include<algorithm>
 using namespace std;
+
 template<class T>
 class AVL 
 {
@@ -154,6 +155,55 @@ class AVL
         srl(k3->right);
         srr(k3);
     }
+    void familydetails(const T &x, AvlNode *t) const
+    {
+        if (!t)
+        {
+            cout << "No element in the tree" << endl;
+            return;
+        }
+
+        AvlNode *parent = nullptr, *grandparent = nullptr, *current = t;
+
+        while (current && current->element != x)
+        {
+            grandparent = parent;
+            parent = current;
+            current = (x < current->element) ? current->left : current->right;
+        }
+
+        if (!current)
+        {
+            cout << "Element " << x << " not found in the tree" << endl;
+            return;
+        }
+
+        cout << "Element : " << current->element << endl;
+        cout << "Parent : " << (parent ? parent->element : -1) << endl;
+        cout << "Grandparent : " << (grandparent ? grandparent->element : -1) << endl;
+        cout << "Sibling : " << ((parent && parent->left == current && parent->right) ? parent->right->element :
+                                 (parent && parent->right == current && parent->left) ? parent->left->element : -1) << endl;
+
+        cout << "Children : ";
+        if (current->left) cout << current->left->element << " ";
+        if (current->right) cout << current->right->element;
+        if (!current->left && !current->right) cout << -1;
+        cout << endl;
+
+        cout << "Grandchildren : ";
+        if (current->left)
+        {
+            if (current->left->left) cout << current->left->left->element << " ";
+            if (current->left->right) cout << current->left->right->element << " ";
+        }
+        if (current->right)
+        {
+            if (current->right->left) cout << current->right->left->element << " ";
+            if (current->right->right) cout << current->right->right->element;
+        }
+        if (!current->left && !current->right) cout << -1;
+        cout << endl;
+    }
     public:
         AVL()
         {
@@ -191,31 +241,67 @@ class AVL
         {
             printTree(root,0);
         }
+        void familydetails(const T &x) const
+        {
+            familydetails(x, root);
+        }
 };
+
 int main()
 {
     AVL<int> tree;
-    tree.insert(1);
-    tree.insert(2);
-    tree.insert(3);
-    tree.insert(4);
-    tree.insert(5);
-    tree.insert(6);
-    tree.insert(7);
-    tree.insert(8);
-    tree.insert(9);
-    tree.insert(10);
-    tree.printTree();
-    cout<<endl;
-    tree.remove(3);
-    tree.remove(6);
-    tree.remove(9);
-    tree.printTree();
-    cout<<endl;
-    bool x = tree.search(10);
-    cout<<"Value 10 : "<<x;
-    cout<<endl;
-    cout<<"Min : "<<tree.findMin();
-    cout<<endl;
-    cout<<"Max : "<<tree.findMax();
+    int choice, value;
+    while (true)
+    {
+        cout << "\nMenu:\n";
+        cout << "1. Insert\n";
+        cout << "2. Remove\n";
+        cout << "3. Search\n";
+        cout << "4. Find Min\n";
+        cout << "5. Find Max\n";
+        cout << "6. Print Tree\n";
+        cout << "7. Family Details\n";
+        cout << "8. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+        switch (choice)
+        {
+            case 1:
+                cout << "Enter value to insert: ";
+                cin >> value;
+                tree.insert(value);
+                break;
+            case 2:
+                cout << "Enter value to remove: ";
+                cin >> value;
+                tree.remove(value);
+                break;
+            case 3:
+                cout << "Enter value to search: ";
+                cin >> value;
+                if (tree.search(value))
+                    cout << "Value found in the tree.\n";
+                else
+                    cout << "Value not found in the tree.\n";
+                break;
+            case 4:
+                cout << "Minimum value: " << tree.findMin() << endl;
+                break;
+            case 5:
+                cout << "Maximum value: " << tree.findMax() << endl;
+                break;
+            case 6:
+                tree.printTree();
+                break;
+            case 7:
+                cout << "Enter value to get family details: ";
+                cin >> value;
+                tree.familydetails(value);
+                break;
+            case 8:
+                return 0;
+            default:
+                cout << "Invalid choice. Please try again.\n";
+        }
+    }
 }
