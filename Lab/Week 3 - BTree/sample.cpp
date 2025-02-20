@@ -153,7 +153,7 @@ public:
     void printTree() const 
     {
         if (root != NULL)
-            root->printTree();
+            root->traverse();
     }
 };
 
@@ -177,18 +177,19 @@ int main()
 
         switch (choice) 
         {
-        case 1: 
+        case 1: {
             int key;
             cout << "Enter the key to insert: ";
-            cin >> key;
-            btree.insert(key);
-            break;
+            cin >> key; // Input the key to insert
+            for(int i=1;i<key;i++)
+            btree.insert(i); // Insert the key in the B-tree
+            break; }
         case 2:
             cout << "B-tree traversal: ";
             btree.traverse(); 
             cout << endl;
             break;
-        case 3: 
+        case 3: {
             int key;
             cout << "Enter the key to search: ";
             cin >> key; 
@@ -198,15 +199,19 @@ int main()
             else
                 cout << "Key " << key << " not found in the B-tree.\n";
             break;
-        case 4:
+        }
+        case 4: {
             cout << "B-tree print:\n";
             btree.printTree(); 
             break;
-        case 5:
+        }
+        case 5: {
             cout << "Exiting...\n";
             break;
+        }
         default:
             cout << "Invalid choice. Please try again.\n";
+            break;
         }
     } while (choice != 5);
     return 0;

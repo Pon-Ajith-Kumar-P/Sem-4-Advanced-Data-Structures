@@ -167,7 +167,8 @@ int main() {
             int key;
             cout << "Enter the key to insert: ";
             cin >> key; // Input the key to insert
-            btree.insert(key); // Insert the key in the B-tree
+            for(int i=1;i<key;i++)
+            btree.insert(i); // Insert the key in the B-tree
             break;
         }
         case 2:
