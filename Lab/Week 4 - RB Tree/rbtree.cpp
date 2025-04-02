@@ -22,43 +22,60 @@ private:
 
     Node* root;
 
-    void rotateLeft(Node*& t) {
+    void rotateLeft(Node*& t) 
+    {
         Node* child = t->right;
         t->right = child->left;
-        if (child->left) child->left->parent = t;
+        if (child->left) 
+            child->left->parent = t;
         child->parent = t->parent;
-        if (!t->parent) root = child;
-        else if (t == t->parent->left) t->parent->left = child;
-        else t->parent->right = child;
+        if (!t->parent) 
+            root = child;
+        else if (t == t->parent->left) 
+            t->parent->left = child;
+        else 
+            t->parent->right = child;
         child->left = t;
         t->parent = child;
     }
 
-    void rotateRight(Node*& t) {
+    void rotateRight(Node*& t) 
+    {
         Node* child = t->left;
         t->left = child->right;
-        if (child->right) child->right->parent = t;
+        if (child->right) 
+            child->right->parent = t;
         child->parent = t->parent;
-        if (!t->parent) root = child;
-        else if (t == t->parent->right) t->parent->right = child;
-        else t->parent->left = child;
+        if (!t->parent) 
+            root = child;
+        else if (t == t->parent->right) 
+            t->parent->right = child;
+        else 
+            t->parent->left = child;
         child->right = t;
         t->parent = child;
     }
 
-    void fixInsert(Node*& t) {
-        while (t != root && t->parent->color == RED) {
+    void fixInsert(Node*& t) 
+    {
+        while (t != root && t->parent->color == RED) 
+        {
             Node* parent = t->parent;
             Node* grandparent = parent->parent;
-            if (parent == grandparent->left) {
+            if (parent == grandparent->left) 
+            {
                 Node* uncle = grandparent->right;
-                if (uncle && uncle->color == RED) {
+                if (uncle && uncle->color == RED) 
+                {
                     parent->color = BLACK;
                     uncle->color = BLACK;
                     grandparent->color = RED;
                     t = grandparent;
-                } else {
-                    if (t == parent->right) {
+                } 
+                else 
+                {
+                    if (t == parent->right) 
+                    {
                         t = parent;
                         rotateLeft(t);
                     }
@@ -66,15 +83,21 @@ private:
                     grandparent->color = RED;
                     rotateRight(grandparent);
                 }
-            } else {
+            } 
+            else 
+            {
                 Node* uncle = grandparent->left;
-                if (uncle && uncle->color == RED) {
+                if (uncle && uncle->color == RED) 
+                {
                     parent->color = BLACK;
                     uncle->color = BLACK;
                     grandparent->color = RED;
                     t = grandparent;
-                } else {
-                    if (t == parent->left) {
+                } 
+                else 
+                {
+                    if (t == parent->left) 
+                    {
                         t = parent;
                         rotateRight(t);
                     }
@@ -139,7 +162,8 @@ public:
         }
         Node* parent = nullptr;
         Node* curr = root;
-        while (curr) {
+        while (curr) 
+        {
             parent = curr;
             if (value < curr->data) curr = curr->left;
             else curr = curr->right;
